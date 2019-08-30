@@ -1,0 +1,388 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "GIOŚ air pollution API",
+    "description": "Documentation for GIOŚ air pollution station",
+    "contact": {
+      "email": "apiteam@swagger.io"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Find out more",
+    "url": "http://powietrze.gios.gov.pl/pjp/content/api"
+  },
+  "host": "api.gios.gov.pl",
+  "basePath": "/pjp-api/rest",
+  "schemes": [
+    "http"
+  ],
+  "tags": [
+    {
+      "name": "Station",
+      "description": "Information about stations"
+    },
+    {
+      "name": "Sensor",
+      "description": "Information about sensor and its acquisitions"
+    }
+  ],
+  "paths": {
+    "/station/findAll": {
+      "get": {
+        "tags": [
+          "Stations"
+        ],
+        "summary": "Get all stations",
+        "operationId": "AllStations",
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/StationsResponse200"
+            }
+          }
+        }
+      }
+    },
+    "/station/sensors/{stationId}": {
+      "get": {
+        "tags": [
+          "Stations"
+        ],
+        "summary": "Sensors in station",
+        "description": "Returns available sensors in specific station",
+        "operationId": "SensorData",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "stationId",
+            "in": "path",
+            "description": "Station identifier",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/SensorsResponse200"
+            }
+          }
+        }
+      }
+    },
+    "/data/getData/{sensorId}": {
+      "get": {
+        "tags": [
+          "Sensor"
+        ],
+        "summary": "Sensor data",
+        "description": "Returns acquisition data for specific sensor.",
+        "operationId": "Sensor",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "sensorId",
+            "in": "path",
+            "description": "Sensor identifier",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Ok",
+            "schema": {
+              "$ref": "#/definitions/SensorResponse200"
+            }
+          }
+        }
+      }
+    },
+    "/aqindex/getIndex/{stationId}": {
+      "get": {
+        "tags": [
+          "Sensor"
+        ],
+        "summary": "Air quality index",
+        "description": "Air quality index by station",
+        "operationId": "AirQualityIndex",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "stationId",
+            "in": "path",
+            "description": "ID of pet to return",
+            "required": true,
+            "type": "integer",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "$ref": "#/definitions/AirQualityIndexResponse200"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "StationsResponse200": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Station"
+      }
+    },
+    "Station": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "stationName": {
+          "type": "string"
+        },
+        "gegrLat": {
+          "type": "string"
+        },
+        "gegrLon": {
+          "type": "string"
+        },
+        "city": {
+          "$ref": "#/definitions/City"
+        }
+      }
+    },
+    "City": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "name": {
+          "type": "string"
+        },
+        "commune": {
+          "$ref": "#/definitions/Commune"
+        },
+        "addressStreet": {
+          "type": "string"
+        }
+      }
+    },
+    "Commune": {
+      "type": "object",
+      "properties": {
+        "communeName": {
+          "type": "string"
+        },
+        "districtName": {
+          "type": "string"
+        },
+        "provinceName": {
+          "type": "string"
+        }
+      }
+    },
+    "SensorsResponse200": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/Sensor"
+      }
+    },
+    "Sensor": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "stationId": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "param": {
+          "$ref": "#/definitions/SensorParam"
+        }
+      }
+    },
+    "SensorParam": {
+      "type": "object",
+      "properties": {
+        "paramName": {
+          "type": "string"
+        },
+        "paramFormula": {
+          "type": "string"
+        },
+        "paramCode": {
+          "$ref": "#/definitions/AcquisitionType"
+        },
+        "idParam": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "SensorResponse200": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "$ref": "#/definitions/AcquisitionType"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/SensorAcquisition"
+          }
+        }
+      }
+    },
+    "SensorAcquisition": {
+      "type": "object",
+      "properties": {
+        "date": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "AirQualityIndexResponse200": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "format": "int64"
+        },
+        "stCalcDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "stIndexLevel": {
+          "type": "object",
+          "example": "{\n  \"id\": 2,\n  \"indexLevelName\": \"Umiarkowany\"\n}\n"
+        },
+        "stSourceDataDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "so2CalcDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "so2IndexLevel": {
+          "type": "string",
+          "example": null
+        },
+        "so2SourceDataDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "no2CalcDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "no2IndexLevel": {
+          "type": "string",
+          "example": null
+        },
+        "no2SourceDataDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "coCalcDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "coIndexLevel": {
+          "type": "string",
+          "example": null
+        },
+        "coSourceDataDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "pm10CalcDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "pm10IndexLevel": {
+          "type": "string",
+          "example": null
+        },
+        "pm10SourceDataDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "pm25CalcDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "pm25IndexLevel": {
+          "type": "string",
+          "example": null
+        },
+        "pm25SourceDataDate": {
+          "type": "string",
+          "example": null
+        },
+        "o3CalcDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "o3IndexLevel": {
+          "type": "string",
+          "example": null
+        },
+        "o3SourceDataDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "c6h6CalcDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        },
+        "c6h6IndexLevel": {
+          "type": "string",
+          "example": "null,"
+        },
+        "c6h6SourceDataDate": {
+          "type": "string",
+          "example": "2017-03-28 12:00:00"
+        }
+      }
+    },
+    "AcquisitionType": {
+      "type": "string",
+      "enum": [
+        "PM10",
+        "NO2",
+        "SO2",
+        "C6H6",
+        "O3",
+        "PM25",
+        "CO"
+      ]
+    }
+  }
+}
