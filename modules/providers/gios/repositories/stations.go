@@ -32,7 +32,8 @@ func (s *StationRepository) FindAll() ([]*models.Station, error) {
 		if station.City != nil {
 			address.ExternalID = strconv.FormatInt(station.City.ID, 10)
 			address.City = station.City.Name
-			address.Address = parseNullableString(station.City.AddressStreet)
+			address.Country = "Poland"
+			address.Street = parseNullableString(station.City.AddressStreet)
 		}
 
 		location := &models.Location{
