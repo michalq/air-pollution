@@ -2,19 +2,27 @@ package main
 
 import (
 	coreRepositories "air-pollution/modules/core/repositories"
-	"air-pollution/modules/providers/gios"
-	"air-pollution/modules/providers/gios/repositories"
+	"air-pollution/modules/providers/airly"
+	airlyRepositories "air-pollution/modules/providers/airly/repositories"
+	//"air-pollution/modules/providers/gios"
+	//giosRepositories "air-pollution/modules/providers/gios/repositories"
 	"fmt"
 )
 
 func main() {
-	client := gios.NewClient(gios.Configuration{
-		Host:     "api.gios.gov.pl",
-		BasePath: "/pjp-api/rest",
-	})
 
 	var stationsRepositories []coreRepositories.StationRepositoryInterface
-	stationsRepositories = append(stationsRepositories, repositories.NewStationRepository(client))
+	//giosClient := gios.NewClient(gios.Configuration{
+	//	Host:     "api.gios.gov.pl",
+	//	BasePath: "/pjp-api/rest",
+	//})
+	//stationsRepositories = append(stationsRepositories, giosRepositories.NewStationRepository(giosClient))
+
+	airlyClient := airly.NewClient(airly.Configuration{
+		Host:     "https://airapi.airly.eu",
+		BasePath: "/",
+	})
+	stationsRepositories = append(stationsRepositories, airlyRepositories.NewStationRepository(airlyClient))
 
 	for _, stationRepository := range stationsRepositories {
 		stations, _ := stationRepository.FindAll()
