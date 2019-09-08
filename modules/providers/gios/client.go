@@ -6,11 +6,11 @@ import (
 )
 
 type Configuration struct {
-	Host string
+	Host     string
 	BasePath string
 }
 
-func NewClient(configuration Configuration) *client.GiosAPIClient {
+func New(configuration Configuration) *client.GiosAPIClient {
 	transport := &client.TransportConfig{
 		Host:     configuration.Host,
 		BasePath: configuration.BasePath,
