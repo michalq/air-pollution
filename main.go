@@ -4,7 +4,6 @@ import (
 	coreRepositories "air-pollution/modules/core/repositories"
 	"air-pollution/modules/providers/airly"
 	airlyRepositories "air-pollution/modules/providers/airly/repositories"
-	"github.com/go-openapi/runtime/client"
 	"github.com/jpfuentes2/go-env"
 	"log"
 	"os"
@@ -37,17 +36,17 @@ func main() {
 	}
 
 	var stationsRepositories []coreRepositories.StationRepositoryInterface
-	//giosClient := gios.NewClient(gios.Configuration{
+	//giosClient := gios.New(gios.Configuration{
 	//	Host:     "api.gios.gov.pl",
 	//	BasePath: "/pjp-api/rest",
 	//})
 	//stationsRepositories = append(stationsRepositories, giosRepositories.NewStationRepository(giosClient))
 
-	airlyClient := airly.NewClient(airly.Configuration{
+	airlyClient, airlyAuth := airly.New(airly.Configuration{
 		Host:     "airapi.airly.eu",
 		BasePath: "/",
+		AuthKey:  config.AirlyApiAuthKey,
 	})
-	airlyAuth := client.APIKeyAuth("apikey", "header", config.AirlyApiAuthKey)
 	stationsRepositories = append(stationsRepositories, airlyRepositories.NewStationRepository(airlyClient, airlyAuth))
 
 	for _, stationRepository := range stationsRepositories {
@@ -56,7 +55,7 @@ func main() {
 			log.Fatal("Error", err)
 		}
 		for _, station := range stations {
-			fmt.Println(station.Address.City)
+			fmt.Println(station.Name)
 		}
 	}
 }
