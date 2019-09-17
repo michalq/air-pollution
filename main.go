@@ -52,4 +52,14 @@ func main() {
 			fmt.Println(station.Name, station.ExternalID)
 		}
 	}
+
+	acqRepository := giosRepositories.NewAcquisitionRepository(giosClient)
+	acqs, err := acqRepository.FindAllByStationID("145")
+	fmt.Printf("Fetching acquisitions for stationId 145, len:  %d", len(acqs))
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	for _, acq := range acqs {
+		fmt.Printf("Type: %s, Value: %s, Day: %d\n", acq.Type, acq.Value, acq.DateFrom.Day())
+	}
 }
