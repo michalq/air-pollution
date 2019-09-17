@@ -45,7 +45,7 @@ func (a *AcquisitionRepository) FindAllByStationID(stationID string) ([]models.A
 					Type:     sensorData.Payload.Key,
 					DateFrom: date,
 					DateTo:   date,
-					Value:    acqValue.Value,
+					Value:    fmt.Sprintf("%f", acqValue.Value),
 				})
 			}
 			acqsChan <- localAcqs
