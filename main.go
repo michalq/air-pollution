@@ -12,11 +12,6 @@ import (
 	"fmt"
 )
 
-type StationRepositorySupervisor struct {
-	IsEnabled  bool
-	Repository coreRepositories.StationRepositoryInterface
-}
-
 func main() {
 	configuration := config.Build()
 	giosClient := gios.New(gios.Configuration{
@@ -30,12 +25,12 @@ func main() {
 		AuthKey:  configuration.ProviderAirly.AuthKey,
 	})
 
-	var stationsRepositories []StationRepositorySupervisor
-	stationsRepositories = append(stationsRepositories, StationRepositorySupervisor{
+	var stationsRepositories []coreRepositories.StationRepositorySupervisor
+	stationsRepositories = append(stationsRepositories, coreRepositories.StationRepositorySupervisor{
 		IsEnabled:  true,
 		Repository: giosRepositories.NewStationRepository(giosClient),
 	})
-	stationsRepositories = append(stationsRepositories, StationRepositorySupervisor{
+	stationsRepositories = append(stationsRepositories, coreRepositories.StationRepositorySupervisor{
 		IsEnabled:  false,
 		Repository: airlyRepositories.NewStationRepository(airlyClient, airlyAuth),
 	})
@@ -53,13 +48,24 @@ func main() {
 		}
 	}
 
-	acqRepository := giosRepositories.NewAcquisitionRepository(giosClient)
-	acqs, err := acqRepository.FindAllByStationID("145")
-	fmt.Printf("Fetching acquisitions for stationId 145, len:  %d", len(acqs))
+	airlyAcqRepository := airlyRepositories.NewAcquisitionRepository(airlyClient, airlyAuth)
+
+	acqs, err := airlyAcqRepository.FindAllByStationID("8077")
+	fmt.Printf("Fetching acquisitions for stationId 8077, len:  %d", len(acqs))
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	for _, acq := range acqs {
 		fmt.Printf("Type: %s, Value: %s, Day: %d\n", acq.Type, acq.Value, acq.DateFrom.Day())
 	}
+
+	//giosAcqRepository := giosRepositories.NewAcquisitionRepository(giosClient)
+	//acqs, err := giosAcqRepository.FindAllByStationID("145")
+	//fmt.Printf("Fetching acquisitions for stationId 145, len:  %d", len(acqs))
+	//if err != nil {
+	//	log.Fatal(err.Error())
+	//}
+	//for _, acq := range acqs {
+	//	fmt.Printf("Type: %s, Value: %s, Day: %d\n", acq.Type, acq.Value, acq.DateFrom.Day())
+	//}
 }

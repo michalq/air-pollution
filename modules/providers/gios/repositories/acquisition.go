@@ -42,7 +42,7 @@ func (a *AcquisitionRepository) FindAllByStationID(stationID string) ([]models.A
 			for _, acqValue := range sensorData.Payload.Values {
 				date, _ := time.Parse("2006-01-02 15:04:05", acqValue.Date)
 				localAcqs = append(localAcqs, models.Acquisition{
-					Type:     sensorData.Payload.Key,
+					Type:     models.Type(sensorData.Payload.Key),
 					DateFrom: date,
 					DateTo:   date,
 					Value:    fmt.Sprintf("%f", acqValue.Value),
