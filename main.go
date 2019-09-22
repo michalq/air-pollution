@@ -56,7 +56,7 @@ func main() {
 		log.Fatal(err.Error())
 	}
 	for _, acq := range acqs {
-		fmt.Printf("Type: %s, Value: %s, Day: %d\n", acq.Type, acq.Value, acq.DateFrom.Day())
+		fmt.Printf("Type: %s, Value: %s, Day: %s\n", acq.Type, acq.Value, acq.DateFrom.String())
 	}
 
 	//giosAcqRepository := giosRepositories.NewAcquisitionRepository(giosClient)

@@ -4,6 +4,7 @@ import (
 	"air-pollution/modules/core/models"
 	"fmt"
 	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/strfmt"
 	"github.com/michalq/go-airly-api-client/client"
 	"github.com/michalq/go-airly-api-client/client/measurements"
 	airlyModels "github.com/michalq/go-airly-api-client/models"
@@ -55,8 +56,8 @@ func (a *AcquisitionRepository) translateAcquisition(
 	acqs := make([]models.Acquisition, 0)
 	for _, averagedValue := range averagedValues.Values {
 
-		dateFrom, _ := time.Parse("2006-01-02 15:04:05", averagedValues.FromDateTime.String())
-		dateTo, _ := time.Parse("2006-01-02 15:04:05", averagedValues.TillDateTime.String())
+		dateFrom, _ := time.Parse(strfmt.RFC3339Millis, averagedValues.FromDateTime.String())
+		dateTo, _ := time.Parse(strfmt.RFC3339Millis, averagedValues.TillDateTime.String())
 		acqs = append(acqs, models.Acquisition{
 			Type:     models.Type(*averagedValue.Name),
 			DateFrom: dateFrom,
