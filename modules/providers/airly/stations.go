@@ -1,4 +1,4 @@
-package repositories
+package airly
 
 import (
 	"air-pollution/modules/core/models"

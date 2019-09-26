@@ -1,4 +1,4 @@
-package repositories
+package airly
 
 import (
 	"air-pollution/modules/core/models"
@@ -21,7 +21,7 @@ func NewAcquisitionRepository(client *client.AirlyAPIClient, auth runtime.Client
 	return &AcquisitionRepository{client, auth}
 }
 
-func (a *AcquisitionRepository) FindAllByStationID(stationId string) ([]models.Acquisition, error) {
+func (a *AcquisitionRepository) FindAllByStationID(stationId string) ([]*models.Acquisition, error) {
 
 	indexType := "AIRLY_CAQI"
 	stationIDint, _ := strconv.ParseInt(stationId, 10, 32)
@@ -39,9 +39,9 @@ func (a *AcquisitionRepository) FindAllByStationID(stationId string) ([]models.A
 
 func (a *AcquisitionRepository) translateAcquisitions(
 	airlyMeasurements *airlyModels.Measurements,
-) []models.Acquisition {
+) []*models.Acquisition {
 
-	acqs := make([]models.Acquisition, 0)
+	acqs := make([]*models.Acquisition, 0)
 	acqs = append(acqs, a.translateAcquisition(airlyMeasurements.Current)...)
 	for _, averagedValue := range airlyMeasurements.History {
 		acqs = append(acqs, a.translateAcquisition(averagedValue)...)
@@ -51,14 +51,14 @@ func (a *AcquisitionRepository) translateAcquisitions(
 
 func (a *AcquisitionRepository) translateAcquisition(
 	averagedValues *airlyModels.AveragedValues,
-) []models.Acquisition {
+) []*models.Acquisition {
 
-	acqs := make([]models.Acquisition, 0)
+	acqs := make([]*models.Acquisition, 0)
 	for _, averagedValue := range averagedValues.Values {
 
 		dateFrom, _ := time.Parse(strfmt.RFC3339Millis, averagedValues.FromDateTime.String())
 		dateTo, _ := time.Parse(strfmt.RFC3339Millis, averagedValues.TillDateTime.String())
-		acqs = append(acqs, models.Acquisition{
+		acqs = append(acqs, &models.Acquisition{
 			Type:     models.Type(*averagedValue.Name),
 			DateFrom: dateFrom,
 			DateTo:   dateTo,

@@ -1,6 +1,9 @@
 package config
 
 import (
+	"air-pollution/modules/core"
+	"air-pollution/modules/providers/airly"
+	"air-pollution/modules/providers/gios"
 	"github.com/jpfuentes2/go-env"
 	"log"
 	"os"
@@ -9,15 +12,9 @@ import (
 )
 
 type Config struct {
-	ProviderAirly struct {
-		AuthKey  string
-		Host     string
-		BasePath string
-	}
-	ProviderGios struct {
-		Host     string
-		BasePath string
-	}
+	ProviderAirly airly.Configuration
+	ProviderGios  gios.Configuration
+	Postgres      core.PostgresConfig
 }
 
 func Build() *Config {

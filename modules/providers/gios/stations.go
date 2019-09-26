@@ -1,4 +1,4 @@
-package repositories
+package gios
 
 import (
 	"air-pollution/modules/core/models"

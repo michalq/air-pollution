@@ -1,4 +1,4 @@
-package models
+package gios
 
 type Sensor struct {
 	ID        string
