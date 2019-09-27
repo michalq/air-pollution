@@ -1,6 +1,9 @@
 package system
 
-import "github.com/go-pg/pg/v9"
+import (
+	"air-pollution/daq/core/models"
+	"github.com/go-pg/pg/v9"
+)
 
 type StationRepository struct {
 	db *pg.DB
@@ -8,4 +11,8 @@ type StationRepository struct {
 
 func NewStationRepository(db *pg.DB) *StationRepository {
 	return &StationRepository{db: db}
+}
+
+func (s *StationRepository) FindAll() ([]*models.Station, error) {
+	return nil, nil
 }

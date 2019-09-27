@@ -1,7 +1,7 @@
 package airly
 
 import (
-	"air-pollution/modules/core/models"
+	"air-pollution/daq/core/models"
 	"fmt"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/strfmt"

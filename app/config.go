@@ -1,9 +1,9 @@
-package config
+package app
 
 import (
-	"air-pollution/modules/core"
-	"air-pollution/modules/providers/airly"
-	"air-pollution/modules/providers/gios"
+	"air-pollution/daq/core"
+	"air-pollution/daq/providers/airly"
+	"air-pollution/daq/providers/gios"
 	"github.com/jpfuentes2/go-env"
 	"log"
 	"os"

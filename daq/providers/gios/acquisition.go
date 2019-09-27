@@ -1,7 +1,7 @@
 package gios
 
 import (
-	"air-pollution/modules/core/models"
+	"air-pollution/daq/core/models"
 	"fmt"
 	"github.com/michalq/go-gios-api-client/client"
 	"github.com/michalq/go-gios-api-client/client/sensor"
