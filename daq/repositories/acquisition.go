@@ -1,6 +1,6 @@
 package repositories
 
-import "air-pollution/daq/core/models"
+import "air-pollution/daq/models"
 
 type AcquisitionFinder interface {
 	FindAllByStationID(string) ([]*models.Acquisition, error)

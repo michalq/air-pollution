@@ -2,10 +2,9 @@ package main
 
 import (
 	"air-pollution/app"
-	"air-pollution/daq/core"
-	coreRepositories "air-pollution/daq/core/repositories"
 	"air-pollution/daq/providers/airly"
 	"air-pollution/daq/providers/system"
+	coreRepositories "air-pollution/daq/repositories"
 	"log"
 
 	"air-pollution/daq/providers/gios"
@@ -14,7 +13,7 @@ import (
 
 func main() {
 	configuration := app.Build()
-	db := core.CreatePostgresConnection(configuration.Postgres)
+	db := app.CreatePostgresConnection(configuration.Postgres)
 	acquisitionRepository := system.NewAcquisitionRepository(db)
 
 	giosClient := gios.New(configuration.ProviderGios)

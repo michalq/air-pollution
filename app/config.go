@@ -1,7 +1,6 @@
 package app
 
 import (
-	"air-pollution/daq/core"
 	"air-pollution/daq/providers/airly"
 	"air-pollution/daq/providers/gios"
 	"github.com/jpfuentes2/go-env"
@@ -14,7 +13,7 @@ import (
 type Config struct {
 	ProviderAirly airly.Configuration
 	ProviderGios  gios.Configuration
-	Postgres      core.PostgresConfig
+	Postgres      PostgresConfig
 }
 
 func Build() *Config {

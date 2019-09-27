@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"air-pollution/daq/core/models"
+	"air-pollution/daq/models"
 )
 
 type FinderSupervisor struct {

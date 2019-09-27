@@ -1,7 +1,7 @@
 package system
 
 import (
-	"air-pollution/daq/core/models"
+	"air-pollution/daq/models"
 	"github.com/go-pg/pg/v9"
 )
 
