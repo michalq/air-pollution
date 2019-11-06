@@ -37,6 +37,14 @@ func Build() *Config {
 			configuration.ProviderGios.Host = value
 		case "GIOS_BASE_PATH":
 			configuration.ProviderGios.BasePath = value
+		case "PSQL_ADDR":
+			configuration.Postgres.Address = value
+		case "PSQL_DB":
+			configuration.Postgres.Database = value
+		case "PSQL_USER":
+			configuration.Postgres.User = value
+		case "PSQL_PASS":
+			configuration.Postgres.Password = value
 		}
 	}
 

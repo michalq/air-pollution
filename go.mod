@@ -7,12 +7,14 @@ require (
 	github.com/Netflix/go-expect v0.0.0-20190729225929-0e00d9168667 // indirect
 	github.com/alecthomas/units v0.0.0-20190910110746-680d30ca3117 // indirect
 	github.com/cpuguy83/go-md2man/v2 v2.0.0 // indirect
+	github.com/gin-gonic/gin v1.4.0
 	github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8 // indirect
 	github.com/go-openapi/jsonreference v0.19.3 // indirect
 	github.com/go-openapi/runtime v0.19.6
 	github.com/go-openapi/strfmt v0.19.3
 	github.com/go-pg/pg/v9 v9.0.0-beta.13
 	github.com/google/pprof v0.0.0-20190908185732-236ed259b199 // indirect
+	github.com/google/wire v0.3.0
 	github.com/grpc-ecosystem/go-grpc-middleware v1.1.0 // indirect
 	github.com/hinshun/vt10x v0.0.0-20180809195222-d55458df857c // indirect
 	github.com/jpfuentes2/go-env v0.0.0-20150316001728-8e0a68de05f2
